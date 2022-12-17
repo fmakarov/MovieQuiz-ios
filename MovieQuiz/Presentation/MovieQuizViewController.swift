@@ -41,9 +41,10 @@ final class MovieQuizViewController: UIViewController {
     private func show(quiz result: QuizResultsViewModel) {
         let alert = UIAlertController(title: result.title, message: result.text, preferredStyle: .alert)
         
-        let action = UIAlertAction(title: result.buttonText, style: .default) {_ in
-            self.currentQuestionIndex = 0
+        let action = UIAlertAction(title: result.buttonText, style: .default) {[weak self] _ in
+            guard let self = self else { return }
             
+            self.currentQuestionIndex = 0
             self.correctAnswers = 0
             
             let firstQuestion = self.questions[self.currentQuestionIndex]
@@ -67,7 +68,8 @@ final class MovieQuizViewController: UIViewController {
         self.noBtnState.isEnabled = false
         self.yesBtnState.isEnabled = false
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else { return }
             self.noBtnState.isEnabled = true
             self.yesBtnState.isEnabled = true
             self.showNextQuestionOrResults()
@@ -83,8 +85,7 @@ final class MovieQuizViewController: UIViewController {
             currentQuestionIndex += 1
             let nextQuestion = questions[currentQuestionIndex]
             let viewModel = convert(model: nextQuestion)
-            
-            
+    
             show(quiz: viewModel)
         }
     }
