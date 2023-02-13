@@ -7,8 +7,8 @@
 
 import Foundation
 
-class QuestionFactory: QuestionFactoryProtocol {
-    weak var delegate: QuestionFactoryDelegate?
+final class QuestionFactory: QuestionFactoryProtocol {
+    private weak var delegate: QuestionFactoryDelegate?
     
     func requestNextQuestion() {
         guard let index = (0..<questions.count).randomElement() else {

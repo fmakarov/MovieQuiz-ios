@@ -7,7 +7,7 @@
 
 import Foundation
 
-class QuizResultsViewModel {
+final class QuizResultsViewModel {
     // для состояния "Результат квиза"
       let title: String
       let text: String

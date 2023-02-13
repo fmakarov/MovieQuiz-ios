@@ -5,10 +5,9 @@
 //  Created by paul kellerman on 17.12.2022.
 //
 
-import Foundation
 import UIKit
 
-class QuizStepViewModel {
+final class QuizStepViewModel {
     // для состояния "Вопрос задан"
       let image: UIImage
       let question: String
