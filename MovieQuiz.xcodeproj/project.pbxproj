@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E13E971299BD824003AC0EE /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E13E970299BD824003AC0EE /* NetworkClient.swift */; };
+		2E13E973299BDB80003AC0EE /* MostPopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E13E972299BDB80003AC0EE /* MostPopularMovies.swift */; };
+		2E13E975299BDBE2003AC0EE /* MoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E13E974299BDBE2003AC0EE /* MoviesLoader.swift */; };
 		2E18EE8429984D2D0012E842 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E18EE8329984D2D0012E842 /* MovieModel.swift */; };
 		2E18EE86299939E20012E842 /* StatisticServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E18EE85299939E20012E842 /* StatisticServiceProtocol.swift */; };
 		2E18EE88299941F30012E842 /* StaticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E18EE87299941F30012E842 /* StaticService.swift */; };
@@ -37,6 +40,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E13E970299BD824003AC0EE /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		2E13E972299BDB80003AC0EE /* MostPopularMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostPopularMovies.swift; sourceTree = "<group>"; };
+		2E13E974299BDBE2003AC0EE /* MoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesLoader.swift; sourceTree = "<group>"; };
 		2E18EE8329984D2D0012E842 /* MovieModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
 		2E18EE85299939E20012E842 /* StatisticServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticServiceProtocol.swift; sourceTree = "<group>"; };
 		2E18EE87299941F30012E842 /* StaticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticService.swift; sourceTree = "<group>"; };
@@ -89,6 +95,8 @@
 				2ECD5F4629555BE9003694F1 /* AlertPresenterDelegate.swift */,
 				2E18EE85299939E20012E842 /* StatisticServiceProtocol.swift */,
 				2E18EE87299941F30012E842 /* StaticService.swift */,
+				2E13E970299BD824003AC0EE /* NetworkClient.swift */,
+				2E13E974299BDBE2003AC0EE /* MoviesLoader.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -102,6 +110,7 @@
 				2ED92AE4294D594400F26AEE /* QuizQuestion.swift */,
 				2ECD5F40295421C8003694F1 /* AlertModel.swift */,
 				2E18EE892999830B0012E842 /* GameRecordModel.swift */,
+				2E13E972299BDB80003AC0EE /* MostPopularMovies.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -285,6 +294,7 @@
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
 				2ECD5F4329542252003694F1 /* AlertPresenter.swift in Sources */,
 				2ECD5F4729555BE9003694F1 /* AlertPresenterDelegate.swift in Sources */,
+				2E13E973299BDB80003AC0EE /* MostPopularMovies.swift in Sources */,
 				2ECD5F41295421C8003694F1 /* AlertModel.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,
 				2ED92AE7295014DA00F26AEE /* QuestionFactoryProtocol.swift in Sources */,
@@ -298,11 +308,13 @@
 				2ED92AE5294D594400F26AEE /* QuizQuestion.swift in Sources */,
 				2E18EE8C299985D00012E842 /* Constants.swift in Sources */,
 				2ED92ADE294D572C00F26AEE /* QuestionFactory.swift in Sources */,
+				2E13E975299BDBE2003AC0EE /* MoviesLoader.swift in Sources */,
 				AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */,
 				AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */,
 				2ED92AE3294D593600F26AEE /* QuizResultsViewModel.swift in Sources */,
 				2E18EE86299939E20012E842 /* StatisticServiceProtocol.swift in Sources */,
 				2E18EE8E299987000012E842 /* Double+Extensions.swift in Sources */,
+				2E13E971299BD824003AC0EE /* NetworkClient.swift in Sources */,
 				AD1ABAB42831907B00B3E448 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

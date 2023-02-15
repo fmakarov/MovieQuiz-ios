@@ -18,7 +18,6 @@ final class StatisticServiceImplementation: StatisticService {
         get {
             userDefaults.integer(forKey: Keys.gamesCount.rawValue)
         }
-        
         set {
             userDefaults.set(newValue, forKey: Keys.gamesCount.rawValue)
         }
@@ -45,7 +44,7 @@ final class StatisticServiceImplementation: StatisticService {
     var totalAccuracy: Double {
         get {
             let correct = userDefaults.double(forKey: Keys.correct.rawValue)
-            let total = userDefaults.double(forKey: Keys.correct.rawValue)
+            let total = userDefaults.double(forKey: Keys.total.rawValue)
             let result = (correct / total) * 100
             
             return result.rounding(before: 2)
@@ -55,6 +54,7 @@ final class StatisticServiceImplementation: StatisticService {
     
     func store(correct count: Int, total amount: Int) {
         let gameRecord = GameRecord(correct: count, total: amount, date: Date())
+        gamesCount += 1
         
         if self.bestGame < gameRecord {
             self.bestGame = gameRecord
@@ -65,6 +65,7 @@ final class StatisticServiceImplementation: StatisticService {
         
         userDefaults.set(correct + count, forKey: Keys.correct.rawValue)
         userDefaults.set(total + amount, forKey: Keys.total.rawValue)
+        userDefaults.set(gamesCount, forKey: Keys.gamesCount.rawValue)
     }
     
     
