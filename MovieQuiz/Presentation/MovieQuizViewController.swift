@@ -4,7 +4,6 @@ final class MovieQuizViewController: UIViewController {
     // MARK: - Lifecycle
     private var presenter: MovieQuizPresenter!
     private var alert: AlertPresenterProtocol?
-    private var statisticService: StatisticService?
     
     private enum FileManagerError: Error {
         case fileDoesntExist
@@ -44,7 +43,6 @@ final class MovieQuizViewController: UIViewController {
         imageView.layer.cornerRadius = 20
         
         alert = AlertPresenter(viewController: self)
-        statisticService = StatisticServiceImplementation()
             
         presenter = MovieQuizPresenter(viewController: self)
         showLoadingIndicator()
@@ -52,27 +50,15 @@ final class MovieQuizViewController: UIViewController {
 }
 
 extension MovieQuizViewController {
+    func highlightImageBorder(isCorrectAnswer: Bool) {
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 8
+        imageView.layer.borderColor = isCorrectAnswer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+    }
     // Функция отображения
     func show(quiz result: QuizResultsViewModel) {
-        if let statisticService = statisticService {
-            statisticService.store(correct: presenter.correctAnswers, total: presenter.questionsAmount)
-        }
-        
-        guard let gameCount = statisticService?.gamesCount,
-              let bestGame = statisticService?.bestGame,
-              let totalAccuracy = statisticService?.totalAccuracy else {
-            return
-        }
-        
-        let messageAlert = """
-          \(Constants.AlertLabel.scoreRound) \(presenter.correctAnswers)/\(presenter.questionsAmount) \n
-          \(Constants.AlertLabel.numberOfQuizzesPlayed) \(gameCount) \n
-          \(Constants.AlertLabel.bestScore) \(bestGame.correct)/\(bestGame.total) (\(bestGame.date.dateTimeString))\n
-          \(Constants.AlertLabel.avgAccuracy) \(totalAccuracy)%
-          """
-        
-        let currentGameResultLine = "Ваш результат: \(presenter.correctAnswers)\\\(presenter.questionsAmount)"
-        let action = AlertModel(title: Constants.AlertLabel.title, message: messageAlert, buttonText: Constants.AlertButton.buttonText) {
+        let message = presenter.makeResultsMessage()
+        let action = AlertModel(title: Constants.AlertLabel.title, message: message, buttonText: Constants.AlertButton.buttonText) {
             self.presenter.restartGame()
         }
         
@@ -84,21 +70,6 @@ extension MovieQuizViewController {
         imageView.layer.borderWidth = 0
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
-    }
-    
-    // Функция проверки корректности ответа
-    func showAnswerResult(isCorrect: Bool){
-        presenter.didAnswer(isCorrectAnswer: isCorrect)
-        imageView.layer.borderWidth = 8
-        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
-        
-        self.noBtnState.isEnabled = false
-        self.yesBtnState.isEnabled = false
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            self.presenter.showNextQuestionOrResults()
-        }
     }
     
     func showLoadingIndicator() {
