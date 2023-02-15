@@ -67,6 +67,4 @@ final class StatisticServiceImplementation: StatisticService {
         userDefaults.set(total + amount, forKey: Keys.total.rawValue)
         userDefaults.set(gamesCount, forKey: Keys.gamesCount.rawValue)
     }
-    
-    
 } 
