@@ -17,9 +17,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     let questionsAmount: Int = 10
     var currentQuestionIndex: Int = 0
     
-    init(viewController: MovieQuizViewController) {
-        self.viewController = viewController
-
+    init(viewController: MovieQuizViewControllerProtocol) {
         statisticService = StatisticServiceImplementation()
 
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
@@ -72,7 +70,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         }
     }
     
-    func isLastQuestion() -> Bool {
+    private func isLastQuestion() -> Bool {
         currentQuestionIndex == questionsAmount - 1
     }
     
@@ -82,7 +80,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         questionFactory?.requestNextQuestion()
     }
     
-    func switchToNextQuestion() {
+    private func switchToNextQuestion() {
         currentQuestionIndex += 1
     }
     
@@ -90,11 +88,11 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         return QuizStepViewModel(
             image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
-            questionNumber: ("\(currentQuestionIndex + 1) / \(questionsAmount)"))
+            questionNumber: ("\(currentQuestionIndex + 1)/\(questionsAmount)"))
     }
     
     // Функция проверки корректности ответа
-    func proceedWithAnswer(isCorrect: Bool){
+    private func proceedWithAnswer(isCorrect: Bool){
         didAnswer(isCorrectAnswer: isCorrect)
         
         viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
@@ -105,8 +103,8 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         }
     }
     
-    func proceedToNextQuestionOrResults() {
-        if self.isLastQuestion() {
+    private func proceedToNextQuestionOrResults() {
+        if isLastQuestion() {
             let text = correctAnswers == self.questionsAmount ?
                         "Поздравляем, вы ответили на 10 из 10!" :
                         "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
@@ -118,7 +116,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             
             viewController?.show(quiz: viewModel)
         } else {
-            self.switchToNextQuestion()
+            switchToNextQuestion()
             questionFactory?.requestNextQuestion()
         }
     }
@@ -140,6 +138,4 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         
         return resultMessage
     }
-    
-    
 }

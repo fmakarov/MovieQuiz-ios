@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController {
+final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var textLabel: UILabel!
     @IBOutlet private var counterLabel: UILabel!
@@ -10,11 +10,7 @@ final class MovieQuizViewController: UIViewController {
 
     private var presenter: MovieQuizPresenter!
     
-    private var alert: AlertPresenterProtocol?
-    
-    private enum FileManagerError: Error {
-        case fileDoesntExist
-    }
+    private var alertPresenter: AlertPresenterProtocol?
     
     private enum ParseError: Error {
         case yearFailure
@@ -25,14 +21,14 @@ final class MovieQuizViewController: UIViewController {
         presenter.didRecieveNextQuestion(question: question)
     }
     
-    
-    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        showLoadingIndicator()
+        
         presenter = MovieQuizPresenter(viewController: self)
-        alert = AlertPresenter(viewController: self)
+        alertPresenter = AlertPresenter(viewController: self)
         
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 20
@@ -57,11 +53,11 @@ final class MovieQuizViewController: UIViewController {
     
     func show(quiz result: QuizResultsViewModel) {
         let message = presenter.makeResultsMessage()
-        let action = AlertModel(title: Constants.AlertLabel.title, message: message, buttonText: Constants.AlertButton.buttonText) {
+        let action = AlertModel(title: Constants.AlertLabel.title, message: message, buttonText: Constants.AlertButton.buttonText) { [weak self] in
+            guard let self = self else { return }
             self.presenter.restartGame()
         }
-        
-        alert?.showAlert(result: action)
+        alertPresenter?.showAlert(result: action)
     }
     
     func highlightImageBorder(isCorrectAnswer: Bool) {
@@ -71,12 +67,13 @@ final class MovieQuizViewController: UIViewController {
     }
 
     func showLoadingIndicator() {
-        activityIndicator.isHidden = false // говорим, что индикатор загрузки не скрыт
-        activityIndicator.startAnimating() // включаем анимацию
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
     }
-
+    
     func hideLoadingIndicator() {
         activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
     
     func showNetworkError(message: String) {
@@ -86,6 +83,6 @@ final class MovieQuizViewController: UIViewController {
             guard let self = self else { return }
             self.presenter.restartGame()
         }
-        alert?.showAlert(result: action)
+        alertPresenter?.showAlert(result: action)
     }
 }
