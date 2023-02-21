@@ -12,11 +12,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     
     private var alertPresenter: AlertPresenterProtocol?
     
-    private enum ParseError: Error {
-        case yearFailure
-        case runtimeMinsFailure
-    }
-    
     func didRecieveNextQuestion(question: QuizQuestion?) {
         presenter.didRecieveNextQuestion(question: question)
     }
@@ -24,8 +19,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        showLoadingIndicator()
         
         presenter = MovieQuizPresenter(viewController: self)
         alertPresenter = AlertPresenter(viewController: self)
